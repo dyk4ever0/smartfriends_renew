@@ -1,0 +1,50 @@
+.recommend-title {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+}
+
+.recommend-title .tag {
+	margin-left: 1vh;
+	margin-bottom: 0.5em;
+}
+
+.recommend-title .tag .Zoom {
+	display: block;
+	width: 100%;
+	padding: 9px;
+	background: #489afd;
+	border: 1px solid #489afd;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: -0.005em;
+	line-height: 17px;
+	border-radius: 5px;
+}
+
+.recommend-title .tag .Lineworks {
+	display: block;
+	width: 100%;
+	padding: 9px;
+	background: #7ac523;
+	border: 1px solid #7ac523;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: -0.005em;
+	line-height: 17px;
+	border-radius: 5px;
+}
+
+.tab-contents {
+	overflow: scroll;
+}
+.tab-buttons {
+	overflow: scroll;
+}

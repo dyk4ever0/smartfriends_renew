@@ -1,0 +1,139 @@
+<!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/common.html" -->
+<body>
+    <!-- GNB -->
+    <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/header.html" -->
+
+    <!-- CONTENTS [s] -->
+    <div class="contents-wrapper contents-header bg-blue">
+        <section class="header-tab">
+            <div class="inner">
+                <h2 class="section-title">컨텐츠 관리</h2>
+                <ul class="tab">
+                    <li class="tab-link"><a href="#">가이드관리</a></li>
+                    <li class="tab-link"><a href="#">진단관리</a></li>
+                    <li class="tab-link current"><a href="#">권한관리</a></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <div class="contents-wrapper has-side-menu">
+        <div class="inner">
+            <!-- LNB [s] -->
+            <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/authority-admin-lnb.html" -->
+            <!-- LNB [e] -->
+            <div class="contents">
+                <section>
+                    <div class="inner">
+                        <h3 class="section-title">편집자</h3>
+                    </div>
+                </section>
+						
+				<section>
+				<!--  편집자 start -->
+				<div class="inner">
+				<div class="editor-area">
+					<ul>
+						<li>
+								<div class="editor-info">
+									<div class="editor-img">
+										<img src="../images/sample_portrait.jpg" alt="">
+									</div>
+									<div class="editor-name">
+										<p class="member-name">박승수</p>
+										<p class="member-info">대웅그룹인턴십<span>|</span>대웅제약</p>
+									</div>
+									<button type="button" class="simple">삭제</button>
+								</div>
+						</li>
+						<li>
+								<div class="editor-info">
+									<div class="editor-img">
+										<img src="../images/sample_portrait.jpg" alt="">
+									</div>
+									<div class="editor-name">
+										<p class="member-name">박승수</p>
+										<p class="member-info">대웅그룹인턴십<span>|</span>대웅제약</p>
+									</div>
+									<button type="button" class="simple">삭제</button>
+								</div>
+						</li>
+						<li>
+								<div class="editor-info">
+									<div class="editor-img">
+										<img src="../images/sample_portrait.jpg" alt="">
+									</div>
+									<div class="editor-name">
+										<p class="member-name">박승수</p>
+										<p class="member-info">대웅그룹인턴십<span>|</span>대웅제약</p>
+									</div>
+									<button type="button" class="simple">삭제</button>
+								</div>
+						</li>
+					</ul>
+				</div>
+				</div>
+				</section>
+				<!--  편집자 end -->
+
+
+
+				<!-- 편집자 추가 start -->
+                <section class="editor-add">
+                    <div class="inner">
+                        <h3 class="section-title">편집자 추가</h3>
+                    </div>
+                </section>
+
+				<section>
+					<div class="inner">
+
+					   <div class="search">
+							 <input type="text" class="search-area" placeholder="검색할 이름을 입력하세요">
+						  	 <button type="submit" class="search-button"></button>
+
+							  <!-- 이름 입력 확정 start -->
+							  <div class="search-name-ok" style="display:none;">
+								<span>김예린<button type="button" class="icon delete"></button></span>
+								<span>김예린<button type="button" class="icon delete"></button></span>
+							  </div>
+							  <!-- 이름 입력 확정 end -->
+
+
+							 <!--  이름 검색시 박스 start -->
+							 <div class="search-name-box" style="display:none;">
+								<div class="search-list">
+									<ul>
+										<li><div><span class="search-list-name">박승호</span><span class="search-department">임원/대표이사 | 한올바이오파마</span></div></li>
+										<li class="active"><div><span class="search-list-name">박승호</span><span class="search-department">임원/대표이사 | 한올바이오파마</span></div></li>
+										<li><div><span class="search-list-name">박승호</span><span class="search-department">임원/대표이사 | 한올바이오파마</span></div></li>
+									</ul>
+								</div>
+							 </div>
+							 <!--  이름 검색시 박스 end -->
+						  
+							<!-- 버튼영역 start -->
+							<div class="btn-wrapper">
+								<button type="button" class="square-btn gray">취소</button>
+								<button type="button" class="square-btn">수정완료</button>
+							</div> 
+							<!-- 버튼영역 end-->
+					   </div>
+					</div>
+				</section>
+				<!-- 편집자 추가 end -->
+            </div>
+        </div>
+    </div>
+    <!-- CONTENTS [e] -->
+
+    <!-- FOOTER -->
+    <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/footer.html" -->
+
+
+	<script>
+		$('.search-area').click(function(){
+			$('.search-name-box').fadeIn();
+		});
+	</script>
+</body>
+</html>

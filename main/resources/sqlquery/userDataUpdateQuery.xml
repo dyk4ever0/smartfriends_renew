@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dwsws">
+	<insert id="insertUser" parameterType="user">
+		insert into user_info(USERINDEX, AVATAR, USERNAME,
+		COMPANYCODE, COMPANYNAME, ORGCODE, ORGNAME, USERID, PASSWORD, DUTYCODE) VALUES
+		(#{userindex}, #{avatar}, #{username}, #{companycode}, #{companyname},
+		#{orgcode}, #{orgname}, #{userid}, #{password}, #{dutycode})
+	</insert>
+
+	<delete id="deleteAllUser">
+		delete from user_info
+	</delete>
+	
+	<select id="checkUserInfoNull" resultType="int">
+		select count(*) from user_info where USERINDEX is not null
+	</select>
+	
+	<select id = "checkFavoriteNull" resultType = "int">
+		select count(*) from favorite_list where IDX is not null
+	</select>
+	
+	<delete id="flushAllDataOfFavoriteList">
+		delete from favorite_list
+	</delete>
+	
+	<delete id = "flushAllDataOfFavoriteListTemp">
+		delete from favorite_list_temp
+	</delete>
+	
+	<insert id="moveFavoriteListToTempTable">
+		insert favorite_list_temp select * from favorite_list
+	</insert>
+	
+	<insert id="moveTempToFavoriteList">
+		insert favorite_list select * from favorite_list_temp
+	</insert>
+</mapper>

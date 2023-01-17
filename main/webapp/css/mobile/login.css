@@ -1,0 +1,130 @@
+.login-header-area {
+	background: #fff;
+}
+
+.login-header-area .back-btn {
+	background: #fff;
+	outline: none;
+	border: none;
+	padding: 25px;
+}
+
+section {
+	margin-top: 0px;
+	padding-top: 100px;
+	padding-bottom: 160px;
+}
+
+footer {
+	margin-top: 0px;
+	border-top: none;
+}
+
+section>.inner {
+	padding: 0 44px;
+}
+
+.inner .login-title {
+	font-size: 21px;
+	line-height: 32px;
+	padding-bottom: 50px;
+	font-weight: 400;
+}
+
+.inner .login-title>b {
+	font-weight: 600;
+}
+
+.inner .login-wrapper {
+	text-align: center;
+}
+
+.inner .login-wrapper .login-text {
+	padding-bottom: 105px;
+}
+
+.inner .login-wrapper .login-text input {
+	width: 100%;
+	background: #FFFFFF 0% 0% no-repeat padding-box;
+	box-shadow: 2px 2px 8px #B4B4B44D;
+	border: 2px solid #B7B7B7;
+	border-radius: 25px;
+	color: #BB9DD6;
+	padding: 15px 50px;
+	box-sizing: border-box;
+	margin-bottom : 20px;
+}
+
+.login-text-active {
+	box-shadow: 2px 2px 8px #BB9DD64D !important;
+	box-shadow: 2px 2px 8px #BB9DD64D !important;
+	border: 2px solid #BB9DD6 !important;
+	font-weight: 600;
+}
+
+.inner .login-wrapper .login-text input:focus, .login-text-active:focus
+	{
+	outline: none;
+}
+
+.inner .login-wrapper .login-text input::-webkit-input-placeholder {
+	color: #C8C8C8;
+	font-size: 13px;
+}
+
+.inner .login-wrapper .login-text input:-ms-input-placeholder {
+	color: #C8C8C8;
+	font-size: 13px;
+}
+
+.inner .login-wrapper .login-text input::placeholder {
+	color: #C8C8C8;
+	font-size: 13px;
+}
+
+.inner .login-wrapper .login-text>i {
+	position: absolute;
+	padding: 14px;
+	margin-left: 8px;
+}
+
+.inner .login-wrapper .login-btn {
+	padding-bottom: 50px;
+}
+
+.inner .login-wrapper .login-btn #signin {
+	border-radius: 50px;
+	opacity: 1;
+	outline: none;
+	border: none;
+	padding: 15px 50px;
+	color: #fff;
+	background: #BB9DD6 0% 0% no-repeat padding-box;
+	box-shadow: 0px 10px 13px #BB9DD64D;
+}
+
+.inner .login-wrapper .login-btn #signin:disabled {
+	background: #B7B7B7;
+	box-shadow: none;
+}
+
+.inner .login-wrapper .main-btn>button {
+	font-size: 13px;
+	font-weight: 300;
+	color: #B7B7B7;
+	background: transparent;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px solid #B7B7B7;
+	padding: 6px 0;
+	cursor: pointer;
+}
+
+.inner .login-wrapper .main-btn i {
+	padding-right: 6px;
+}
+
+i {
+	width: 13px;
+}

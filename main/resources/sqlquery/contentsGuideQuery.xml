@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="dwsws">
+    <!--tool, comments, youtubeurl, category  -->
+    <select id="selectContentsInfo" resultType="contentsInfo">
+    	select TITLE, contents.COMMENTS, YOUTUBEURL, category.COMMENTS as section, contents.IDX
+		from category join contents
+		where contents.CATEGORY = category.IDX and TITLE=#{tool};
+    </select>
+    
+    <!--update comments -->
+    <update id="updateComments" parameterType="Map">
+    	update contents
+		set COMMENTS=#{comments}, updatedate = current_timestamp(), updateuserindex=#{userindex}
+		WHERE TITLE=#{tool};
+    </update>
+    
+    <!--update youtubeurl   -->
+    <update id="updateUrl" parameterType="Map">
+     	update contents
+		set youtubeurl=#{youtubeurl}, updatedate = current_timestamp(), updateuserindex=#{userindex}
+		WHERE TITLE=#{tool};
+    </update>
+    
+    <!--update youtubeurl2   -->
+    <update id="updateUrl2" parameterType="Map">
+     	update contents
+		set youtubeurl2=#{youtubeurl}, updatedate = current_timestamp(), updateuserindex=#{userindex}
+		WHERE TITLE=#{tool};
+    </update>
+    
+    <!--update category  -->
+    <update id="updateCategory" parameterType="Map">
+    update contents
+	set category=(select idx
+				from category
+				where comments=#{category}), updatedate = current_timestamp(), updateuserindex=#{userindex}
+	WHERE TITLE=#{tool};
+    </update>
+
+	<!--select section List for edit containing sectionIdx  -->
+	<select id="selectSectionListforEdit" parameterType="String" resultType="sectionList">
+	select section.IDX as sectionIdx, section.COMMENTS
+	from section join contents
+	where contents.TITLE=#{tool} and section.CONTENTS = contents.IDX
+	order by section.comments*1;
+	</select>
+	
+	<!--delete bookmark list  -->
+	<delete id="deleteBmk" parameterType="int">
+	delete from bookmark
+	where idx=#{idx};
+	</delete>
+	
+	<!--update section  -->
+	<update id="updateSection" parameterType="Map">
+	update section
+	set comments = #{comments}, updatedate = current_timestamp(), updateuserindex=#{userindex}
+	where idx=#{idx};
+	</update>
+	
+	<!--update bookmark  -->
+	<update id="updatebookmark" parameterType="Map">
+	update bookmark
+	set timemoment = #{timemoment}, comments=#{comments}, updatedate = current_timestamp(), updateuserindex=#{userindex}
+	where idx=#{bmkidx};
+	</update>
+	
+	<!--insert bookmark  -->
+	<insert id="insertBookmark" parameterType="Map">
+	insert into bookmark(timemoment, comments, section, entryuserindex)
+	values(#{timemoment}, #{comments}, #{section}, #{userindex});
+	</insert>
+	
+	<!--insertSection  -->
+	<insert id="insertSection" parameterType="Map">
+	insert into section(comments, contents, entryuserindex)
+	values(#{comments}, (select idx
+	from contents
+	where title=#{tool}), #{userindex});
+	</insert>
+	
+	<!--insert newbookmark of new section  -->
+	<insert id="insertNewSectionNewBookmark">
+	insert into bookmark(timemoment, comments, section,entryuserindex)
+	values(#{timemoment}, #{comments}, (select idx
+										from section
+										where comments=#{section}), #{userindex});
+	</insert>
+	
+	<!--delete section  -->
+	<delete id="deleteSection" parameterType="int">
+	delete from section
+	where idx=#{idx};
+	</delete>
+    </mapper>
+    

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--admin-가이드관리에서 새로운 컨텐츠 추가 관련 쿼리문  -->
+<mapper namespace="dwsws">
+<!--contents 테이블에 새로운 컨텐츠 추가  -->
+<insert id="insertNewContents"  parameterType="Map">
+insert into contents(title, comments, youtubeurl, category, entryuserindex, entrydate)
+values(#{title}, #{comments}, #{url}, (select idx from category where comments = #{category}), #{userindex}, current_timestamp());
+</insert>
+
+<!--contents 테이블에서 컨텐츠 제거  -->
+<delete id="deleteContents" parameterType="String">
+delete 
+from contents
+where title=#{contents};
+</delete>
+
+<!--특정 컨텐츠(베아월드, 간편도구..)와 관련된 모든 이미지 파일 select  -->
+<select id="select_routes_All" parameterType="String" resultType="String">
+select route
+from tip_imgs
+where contentsidx in (select idx
+						from contents
+						where title=#{contentsName});
+</select>
+</mapper> 

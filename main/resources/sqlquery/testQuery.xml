@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dwsws">
+	<select id="selectCategoryList" resultType="test">
+		SELECT * FROM
+		category;
+	</select>
+
+	<select id="selectBookmarkList" resultType="rule">
+		SELECT smart_work_rule.TITLE, smart_work_rule.COMMENTS, bookmark.COMMENTS as BKCOMMENTS,  bookmark.IDX AS BIDX, bm_cnt.TITLE AS TOOL, bookmark.TIMEMOMENT, YOUTUBEURL
+		FROM smart_work_rule join rule_third join bookmark join (SELECT bookmark.COMMENTS, contents.TITLE, bookmark.IDX as bmk_idx, YOUTUBEURL
+		FROM bookmark join section join contents
+		WHERE bookmark.section = section.IDX and section.CONTENTS = contents.IDX) as bm_cnt
+		where smart_work_rule.IDX = rule_third.THIRD_RULE and rule_third.THIRD_BMK = bookmark.IDX and bm_cnt.bmk_idx = bookmark.IDX;
+	</select>
+	
+	<select id="selectContentsList" resultType="contents">
+		select * from contents;
+	</select>
+	
+	<select id="selectFavoriteList" resultType="favorite">
+		select * from favorite_list;
+	</select>
+	
+	<select id="selectQuestionList" resultType="question">
+		select * from zoom_question_list;
+	</select>
+	
+	<select id="selectTestresultList" resultType="result">
+		select * from zoom_test_result;
+	</select>
+	
+	<select id="selectRule3" resultType="rule">
+		select * from rule_3;
+	</select>
+	
+	<select id="selectSection" resultType="section">
+		select * from section;
+	</select>
+	
+	<select id="selectSmartworkRule" resultType="smartwork">
+		select * from smart_work_rule;
+	</select>
+	
+	<select id="selectTestoffertool" resultType="tool">
+		select * from contents;
+	</select>
+	
+	<select id="selectUserinfo" resultType="user">
+		select * from user_info;
+	</select>
+	
+	<!-- <select id="userFavoriteList" resultType="userFavorite" parameterType="String">
+		select favorite_list.USERINDEX, favorite_list.BOOKMARK, bookmark.COMMENTS, bm_cnt.TITLE
+		from favorite_list join user_info join bookmark join (SELECT bookmark.COMMENTS, contents.TITLE, bookmark.IDX
+		FROM bookmark join section join contents
+		WHERE bookmark.section = section.IDX and section.CONTENTS = contents.IDX) as bm_cnt
+		where favorite_list.USERINDEX = user_info.USERINDEX and bookmark.IDX = favorite_list.BOOKMARK and user_info.USERINDEX = #{userindex} and bm_cnt.COMMENTS = bookmark.COMMENTS;
+	</select> -->
+	
+	
+</mapper>

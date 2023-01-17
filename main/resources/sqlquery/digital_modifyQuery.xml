@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dwsws">
+<!--contents명으로 contents index 가져오기  -->
+<!--예)메일_서명기능_인사와 소속 안내를 자동 기재하기 -> 12 return   -->
+<select id="select_ContentsIdx_digital" parameterType="String" resultType="int">
+	select idx
+	from contents
+	where comments=#{contentsName};
+</select>
+
+<!--특정 컨텐츠 인덱스와 관련된 이미지 갯수 리턴  -->
+<select id="select_count_contents" parameterType="int" resultType="int">
+	select count(idx)
+	from tip_imgs
+	where CONTENTSIDX=#{contentsIdx};
+</select>
+
+<!--tip_imgs 테이블에 이미지 추가 -->
+<insert id="insertImg" parameterType="Map" >
+	insert into tip_imgs(route, contentsidx, entryuserindex, entrydate)
+	values(#{imgName}, #{contentsIdx}, #{userindex}, current_timestamp());
+</insert>
+
+<!--contents테이블에 디지털창 관련 컨텐츠 추가  -->
+<insert id="insertContents_digital" parameterType="Map">
+insert into contents(title, comments, category, entryuserindex, entrydate)
+values(#{contentsTitle}, #{comments}, (select idx
+									from category
+									where comments="디지털창"), #{userindex}, current_timestamp());
+</insert>
+
+<!--tip_imgs에서 이미지 삭제  -->
+<delete id="delete_img" parameterType="String">
+	delete
+	from tip_imgs
+	where route = #{route};
+</delete>
+
+<!--tip_imgs 테이블에서 특정 컨텐츠와 관련된 모든 파일명 가져오기  -->
+<select id="select_routes" parameterType="int" resultType="String">
+	select route
+	from tip_imgs
+	where CONTENTSIDX=#{contentsIdx};
+</select>
+
+<!--contents 테이블에서 컨텐츠 삭제 : 컨텐츠에서 삭제하면 이를 참조하던 tip_imgs테이블의 이미지 파일도 delete cascade  -->
+<delete id="delete_contents" parameterType="int">
+	delete
+	from contents
+	where idx = #{idxNum};
+</delete>
+
+<!--컨텐츠명 업데이트  -->
+<update id="updateContentsName4Digital" parameterType="Map" >
+	update contents
+	set comments =#{comments}
+	where idx=#{idx};
+</update>
+</mapper>

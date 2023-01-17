@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dwsws">
+	<select id="oneUserAuthCall" parameterType="String" resultType="userauth">
+		select * from user_auth where USERINDEX = #{userindex}
+	</select>
+	
+	<select id="callAuthorizedPeople" parameterType="String" resultType="authlist">
+		select user_auth.USERINDEX,
+				user_auth.USERNAME,
+		        user_auth.COMPANYNAME,
+		        user_auth.ORGNAME,
+		        user_info.AVATAR
+			from user_auth, user_info 
+		        where user_auth.${authtype} = 1
+						and user_info.USERINDEX = user_auth.USERINDEX;
+	</select>
+	
+	<insert id="registerAuth" parameterType="map">
+		insert into user_auth (USERINDEX, USERNAME, COMPANYNAME, ORGNAME, AVATAR, ${authtype}, ENTRYUSERINDEX)
+		values
+		(
+			#{userindex},
+			(select USERNAME from user_info where USERINDEX = #{userindex}),
+			(select COMPANYNAME from user_info where USERINDEX = #{userindex}),
+			(select ORGNAME from user_info where USERINDEX = #{userindex}),
+			(select AVATAR from user_info where USERINDEX = #{userindex}),
+			1,
+			#{loginuserindex}
+		)
+		on duplicate key update
+			UPDATEUSERINDEX = #{loginuserindex},
+			${authtype} = 1
+	</insert>
+	
+	<update id="deregisterAuth" parameterType="map">
+		update user_auth set
+		${authtype} = 0, UPDATEUSERINDEX = #{loginuserindex}
+		where USERINDEX = #{userindex}
+	</update>
+	
+	<select id="callPeopleBySearchedName" parameterType="String" resultType="authlist">
+		select USERINDEX, USERNAME, COMPANYNAME, ORGNAME, AVATAR from user_info where USERNAME like '%${username}%'
+	</select>
+</mapper>

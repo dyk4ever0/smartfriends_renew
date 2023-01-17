@@ -1,0 +1,192 @@
+.contents-wrapper {
+	padding-bottom: 200px;
+}
+
+.contents-wrapper.has-side-menu .contents section .inner {
+	padding: 0;
+}
+
+.digital-lists h4 {
+	font-size: 14px;
+	color: #0093bd;
+	padding-bottom: 3px;
+	font-weight: bold;
+}
+
+.digital-lists .inner>ul {
+	overflow: hidden;
+}
+
+.digital-lists .inner>ul>li {
+	float: left;
+	width: 32%;
+	margin-right: 8px;
+	text-align: center;
+}
+
+.digital-lists li:last-child {
+	margin-right: 0;
+} /* ie9부터 적용 */
+.digital-lists li.last {
+	margin-right: 0;
+} /* 모든 브라우저에 적용 */
+.digital-lists li span {
+	position: relative;
+	display: block;
+}
+
+.digital-lists li span img {
+	width: 100%;
+}
+
+.digital-lists li span em {
+	visibility: hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: rgba(0, 0, 0, 0.7);
+	color: #fff;
+	width: 100%;
+	height: 100%;
+	line-height: 300px;
+}
+
+.digital-lists li span:hover em {
+	visibility: visible;
+}
+
+.digital-lists li strong {
+	padding: 10px 5px 40px 5px;
+	display: inline-block;
+	font-size: 16px;
+	line-height: 23px;
+	text-align: left;
+	height: 40px;
+}
+
+.digital-lists li a {
+	cursor: pointer;
+}
+
+.layer-popup {
+	bottom: 0;
+	display: none;
+}
+
+.layer-popup h2 {
+	font-weight: 500;
+	color: #fff;
+	font-size: 18px;
+	line-height: 35px;
+	letter-spacing: -0.05em;
+	padding: 15px 0 10px;
+	text-align: center;
+	letter-spacing: 1px;
+	text-decoration: underline;
+    text-underline-position: under;
+}
+
+.layer-popup.img-player.active {
+	display: block;
+	overflow: auto;
+}
+
+.layer-popup.img-player.active .slick-area-img {
+	text-align: center;
+}
+
+.layer-popup.img-player .header .title {
+	font-size: 20px;
+	font-weight: 400;
+	letter-spacing: -0.05em;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	margin-top: 30px;
+}
+
+.slick-slide img {
+	margin: 0 auto;
+	width: 40%;
+	padding: 20px 0 30px;
+}
+
+
+.slick-slide img:hover {
+	cursor: pointer;
+}
+
+.layer-popup .slick-area-img .slick-prev {
+	position: absolute;
+	z-index: 9999;
+	top: 50%;
+	left: 23%;
+	width: 50px;
+	height: 50px;
+	color: transparent;
+	background: transparent;
+	outline: none;
+	border-left: 2px solid white;
+	border-bottom: 2px solid white;
+	border-top: transparent;
+	border-right: transparent;
+	transform: rotate(45deg);
+}
+
+.layer-popup .slick-area-img .slick-next {
+	position: absolute;
+	z-index: 9999;
+	top: 50%;
+	right: 23%;
+	color: transparent;
+	background: transparent;
+	outline: none;
+	border-left: transparent;
+	border-bottom: transparent;
+	border-top: 2px solid white;
+	border-right: 2px solid white;
+	height: 50px;
+	width: 50px;
+	transform: rotate(45deg);
+}
+
+.layer-popup.img-player button {
+	position: fixed;
+	top: 100px;
+	right: 50px;
+}
+
+.layer-popup .slick-area-img .slick-dots {
+	width: 600px;
+	margin: 0 auto;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+.layer-popup .slick-area-img .slick-dots li {
+	display: inline-block;
+	padding: 0 6px;
+}
+
+.layer-popup .slick-area-img .slick-dots li button {
+	border-radius: 20px;
+	width: 16px;
+	height: 16px;
+	outline: none;
+	border: none;
+	background-color: #777777;
+	color: transparent;
+}
+
+.layer-popup .slick-area-img .slick-dots .slick-active button {
+	background-color: #fff;
+}
+
+.slick-track {
+	width: 600px
+}
+
+.popup-img img {
+	width: 500px;
+	margin-top: 10px;
+}

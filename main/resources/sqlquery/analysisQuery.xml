@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dwsws">
+	<select id="numberOfCrewSkill" resultType="numberOfSkillListDO">
+		select count(if(TOTALSKILL = "매우 높은", TOTALSKILL, null)) VERYHIGH,
+				count(if(TOTALSKILL = "높은", TOTALSKILL, null)) HIGH,
+		        count(if(TOTALSKILL = "보통", TOTALSKILL, null)) NORMAL,
+		        count(if(TOTALSKILL = "낮은", TOTALSKILL, null)) LOW,
+		        count(if(TOTALSKILL = "매우 낮은", TOTALSKILL, null)) VERYLOW
+		from (
+			select
+					if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.2), "매우 높은",
+						if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.4), "높은",
+			            if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.6), "보통",
+			            if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.8), "낮은",
+			            if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM), "매우 낮은", null
+			            ))))) TOTALSKILL
+			from user_ranking, (select count(*) ATTENDENCENUM from user_ranking) temp
+				where DUTYCODE = '2071' or DUTYCODE = '2065'
+			order by RANKING
+		) temp_ranking_list
+	</select>
+	
+	<select id="numberOfNotcrewSkill" resultType="numberOfSkillListDO">
+		select count(if(TOTALSKILL = "매우 높은", TOTALSKILL, null)) VERYHIGH,
+				count(if(TOTALSKILL = "높은", TOTALSKILL, null)) HIGH,
+		        count(if(TOTALSKILL = "보통", TOTALSKILL, null)) NORMAL,
+		        count(if(TOTALSKILL = "낮은", TOTALSKILL, null)) LOW,
+		        count(if(TOTALSKILL = "매우 낮은", TOTALSKILL, null)) VERYLOW
+		from (
+			select
+					if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.2), "매우 높은",
+						if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.4), "높은",
+			            if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.6), "보통",
+			            if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.8), "낮은",
+			            if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM), "매우 낮은", null
+			            ))))) TOTALSKILL
+			from user_ranking, (select count(*) ATTENDENCENUM from user_ranking) temp
+				where DUTYCODE != '2071' and DUTYCODE != '2065'
+			order by RANKING
+		) temp_ranking_list
+	</select> 
+	
+	<select id="getAllOrgNumber" resultType="int">
+		select count(*) from (
+			select ORGNAME from user_info group by COMPANYNAME, ORGNAME) org_list_table
+	</select>
+	
+	<select id="getAllCompanyNumber" resultType="int">
+		select count(*) from (
+			select COMPANYNAME from user_info group by COMPANYNAME) temp;
+	</select>
+	
+	<select id="getCrewToolScore" parameterType="String" resultType="int">
+		select cast(avg(TOTALSCORE) as integer) CREWTOTAL from ${toolname}_recent_test_result
+			where DUTYCODE = '2071' or DUTYCODE = '2065';
+	</select>
+	
+	<select id="getNonCrewToolScore" parameterType="String" resultType="int">
+		select cast(avg(TOTALSCORE) as integer) NONCREWTOTAL from ${toolname}_recent_test_result
+    		where DUTYCODE != '2071' and DUTYCODE != '2065'
+	</select>
+	
+	<select id="getAverageToolScore" parameterType="String" resultType="int">
+		select cast(avg(TOTALSCORE) as integer) AVERAGETOTAL from ${toolname}_recent_test_result
+	</select>
+	
+	<select id="getCompanynameList" resultType="String">
+		select COMPANYNAME from user_info group by COMPANYNAME
+	</select>
+	
+	<select id="getOrgnameListGroupbyCompanyname" parameterType="String" resultType="String">
+		select ORGNAME from user_info where COMPANYNAME = #{companyname} group by ORGNAME
+	</select>
+	
+	<select id="getRankingByCompOrOrg" parameterType = "map" resultType="int">
+		select ORGRANKING from (
+			select COMPANYNAME, ORGNAME, SUM(TOTALSCORE)/count(TOTALSCORE) ORGTOTALSCORE, rank() over (order by ORGTOTALSCORE desc) ORGRANKING from user_ranking
+				group by COMPANYNAME
+				<if test="orgname != null">
+				, ORGNAME
+				</if>
+				) org_ranking_table
+			where COMPANYNAME = #{companyname}
+			<if test="orgname != null">
+			and ORGNAME = #{orgname}
+			</if>
+			order by ORGRANKING
+	</select>
+	
+	<select id="getNumberOfPeopleInCompOrOrg" parameterType = "map" resultType="int">
+		select count(*) TOTALPEOPLE from user_info
+			where COMPANYNAME = #{companyname} 
+			<if test="orgname != null">
+			and ORGNAME = #{orgname}
+			</if>
+	</select>
+	
+	<select id="getNumberOfPeopleOnAttendenceInfo" parameterType = "map" resultType="int">
+		select count(*) TOTALPEOPLE from user_ranking
+			where COMPANYNAME = #{companyname}
+			<if test="orgname != null">
+			and ORGNAME = #{orgname};
+			</if>
+	</select>
+	
+	<select id="getNumberOfCompOrOrgSkill" parameterType = "map" resultType="numberOfSkillListDO">
+		select count(if(TOTALSKILL = "매우 높은", TOTALSKILL, null)) VERYHIGH,
+				count(if(TOTALSKILL = "높은", TOTALSKILL, null)) HIGH,
+		        count(if(TOTALSKILL = "보통", TOTALSKILL, null)) NORMAL,
+		        count(if(TOTALSKILL = "낮은", TOTALSKILL, null)) LOW,
+		        count(if(TOTALSKILL = "매우 낮은", TOTALSKILL, null)) VERYLOW
+			from (
+			select USERINDEX, USERNAME, DUTYCODE, COMPANYNAME, ORGNAME, RANKING, TOTALSCORE,
+					if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.2), "매우 높은",
+						if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.4), "높은",
+			            if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.6), "보통",
+			            if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM * 0.8), "낮은",
+			            if(RANKING <![CDATA[ <= ]]> (temp.ATTENDENCENUM), "매우 낮은", null
+			            ))))) TOTALSKILL
+			from user_ranking, (select count(*) ATTENDENCENUM from user_ranking) temp
+			order by RANKING
+			) temp_ranking_list
+				where COMPANYNAME = #{companyname}
+				<if test="orgname != null">
+				and ORGNAME = #{orgname}
+				</if>
+	</select>
+	
+	<select id="getTotalOrgNumberDataFromRecentTableByToolname" parameterType = "String" resultType="int">
+		select count(*) from (select COMPANYNAME, ORGNAME from ${toolname}_recent_test_result group by COMPANYNAME, ORGNAME) temp
+	</select>
+	
+	<select id="getTotalCompNumberDataFromRecentTableByToolname" parameterType = "String" resultType="int">
+		select count(*) from (select COMPANYNAME from zoom_recent_test_result group by COMPANYNAME) temp;
+	</select>
+	
+	<select id="getOrgScoreByOrgRanking" parameterType = "map" resultType="int">
+		select TOTALSCORE from (
+			select COMPANYNAME,
+					ORGNAME,
+					SUM(TOTALSCORE)/count(TOTALSCORE) TOTALSCORE,
+					row_number() over (order by TOTALSCORE desc) RANKING
+				from ${toolname}_recent_test_result
+				group by COMPANYNAME, ORGNAME) temp_ranking_table
+			where RANKING = #{ranking}
+			order by RANKING
+			limit 1;
+	</select>
+	
+	<select id="getCompanyScoreByRanking" parameterType = "map" resultType="int">
+		select TOTALSCORE from (
+			select COMPANYNAME,
+					SUM(TOTALSCORE)/count(TOTALSCORE) TOTALSCORE,
+					row_number() over (order by TOTALSCORE desc) RANKING
+				from ${toolname}_recent_test_result
+				group by COMPANYNAME) temp_ranking_table
+			where RANKING = #{ranking}
+			order by RANKING
+			limit 1;
+	</select>
+	
+	<select id="getGroupScoreByCompAndOrgName" parameterType="map" resultType="int">
+		select TOTALSCORE from (
+			select COMPANYNAME,
+					<if test="orgname != null">
+					ORGNAME,
+					</if>
+					SUM(TOTALSCORE)/count(TOTALSCORE) TOTALSCORE,
+					rank() over (order by TOTALSCORE desc) RANKING
+				from ${toolname}_recent_test_result
+				group by COMPANYNAME
+				<if test="orgname!=null">
+				, ORGNAME
+				</if>
+				) temp_ranking_table
+			where COMPANYNAME=#{companyname}
+			<if test="orgname!=null">
+			and ORGNAME=#{orgname}
+			</if>
+			order by RANKING;
+	</select>
+	
+	<select id="getMinscoreFromTooltableForOrg" parameterType="String" resultType="int">
+		select min(ORGTOTALSCORE) from (
+			select COMPANYNAME,
+					ORGNAME,
+					SUM(TOTALSCORE)/count(TOTALSCORE) ORGTOTALSCORE,
+					rank() over (order by ORGTOTALSCORE desc) ORGRANKING
+				from ${toolname}_recent_test_result
+				group by COMPANYNAME, ORGNAME) org_ranking_table
+	</select>
+	
+	<select id="getMinscoreFromTooltableForCompany" parameterType="String" resultType="int">
+		select min(TOTALSCORE) from (
+			select COMPANYNAME,
+					SUM(TOTALSCORE)/count(TOTALSCORE) TOTALSCORE,
+					rank() over (order by TOTALSCORE desc) RANKING
+				from ${toolname}_recent_test_result
+				group by COMPANYNAME) temp_ranking_table
+	</select>
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dwsws">
+	<!--셀렉트박스 왼쪽 : 도구 목록  -->
+	<!--디지털창과 스마트워크룰 제외 -->
+	<select id="toolList4Contents" resultType="String">
+	select title
+	from contents
+	where title not in (select title
+						from contents
+						where category=5
+						group by title) and title != "스마트워크룰";
+	</select>
+
+	<!--도구별 북마크리스트  -->
+	<select id="bmkListAboutTool" parameterType="String" resultType="bmkSelectDO">
+	select idx, comments
+	from bookmark
+	where section in(
+		select idx
+		from section
+		where contents=
+			(select idx
+			from contents
+			where title=#{tool}));
+	</select>
+
+	<!--update 영상제목 -->
+    <update id="updateVideoTitle4Rule" parameterType="Map">
+    	update contents
+		set videotitle=#{title}, updatedate = current_timestamp(), updateuserindex=#{userindex}
+		WHERE TITLE="스마트워크룰";
+    </update>
+    
+    <!--update 한 줄 설명 -->
+    <update id="updateOneDesc" parameterType="Map">
+    	update contents
+		set onedesc=#{onedesc}, updatedate = current_timestamp(), updateuserindex=#{userindex}
+		WHERE TITLE="스마트워크룰";
+    </update>
+    
+     <!--update 상세 설명 -->
+    <update id="updateComments4Rule" parameterType="Map">
+    	update contents
+		set comments=#{comments}, updatedate = current_timestamp(), updateuserindex=#{userindex}
+		WHERE TITLE="스마트워크룰";
+    </update>
+    
+    <!--update youtubeurl   -->
+    <update id="updateUrl4Rule" parameterType="Map">
+     	update contents
+		set youtubeurl=#{youtubeurl}, updatedate = current_timestamp(), updateuserindex=#{userindex}
+		WHERE TITLE="스마트워크룰";
+    </update>
+    
+    <!--update 규칙명, 규칙설명  -->
+    <update id="updateRuleNameAndDesc" parameterType="Map" >
+    UPDATE smart_work_rule 
+    SET TITLE = #{ruleName}, COMMENTS = #{comments} , updatedate = current_timestamp(), updateuserindex=#{userindex}
+    WHERE rule = #{ruleNum};
+    </update>
+  
+  <!--rule테이블에서 특정 번호의 룰 삭제  -->
+  <delete id="deleteRule" parameterType="int">
+    delete from rule
+	where rule=#{ruleNum};
+  </delete>
+  
+  <!--특정 Rule에 bmk 추가  -->
+  <insert id="insertBmk4SpecificRule" parameterType="Map">
+  	insert into rule(rule, bmk, entryuserindex, entrydate)
+	values (#{ruleNum}, #{bmk}, #{entryuserindex}, current_timestamp());
+  </insert>
+  
+  <!--스마트워크룰 규칙 삭제  -->
+  <delete id="deleteSmartRule" parameterType="int">
+  	delete from smart_work_rule
+	where rule=#{ruleNum};
+  </delete>
+  
+  <!--스마트워크룰 규칙 삽입(smart_work_rule table)  -->
+  <insert id="insertNewRule" parameterType="Map">
+ 	insert into smart_work_rule(rule, title, comments, entryuserindex, entrydate)
+	values(#{rule}, #{title}, #{comments}, #{userindex}, current_timestamp());
+  </insert>
+  
+</mapper>

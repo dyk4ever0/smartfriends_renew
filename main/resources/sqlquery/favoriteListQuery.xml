@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dwsws">
+	<select id="userFavoriteList" resultType="userFavorite" parameterType="String"> <!--사용자별 즐겨찾기 목록  -->
+		select favorite_list.USERINDEX, favorite_list.BOOKMARK, bookmark.COMMENTS, bm_cnt.TITLE, TIMEMOMENT, bm_cnt.category, section
+		from favorite_list join user_info join bookmark join (SELECT bookmark.COMMENTS, contents.TITLE, bookmark.IDX, category.COMMENTS as category
+		FROM bookmark join section join contents join category
+		WHERE bookmark.section = section.IDX and section.CONTENTS = contents.IDX and category.idx = contents.category) as bm_cnt
+		where favorite_list.USERINDEX = user_info.USERINDEX and bookmark.IDX = favorite_list.BOOKMARK and user_info.USERINDEX = #{userindex} and bm_cnt.IDX = bookmark.IDX
+		order by favorite_list.ENTRYDATE asc;
+	</select>
+	
+	<select id="userFavoriteListNum" resultType="int" parameterType="String"> <!--사용자별 즐겨찾기 갯수  -->
+	select count(*)
+	from favorite_list join user_info join bookmark join (SELECT bookmark.COMMENTS, contents.TITLE, bookmark.IDX
+	FROM bookmark join section join contents
+	WHERE bookmark.section = section.IDX and section.CONTENTS = contents.IDX) as bm_cnt
+	where favorite_list.USERINDEX = user_info.USERINDEX and bookmark.IDX = favorite_list.BOOKMARK and user_info.USERINDEX = #{userindex} and bm_cnt.IDX = bookmark.IDX;
+	</select>
+	
+	<select id="userFavoriteBmkidxList" resultType="int" parameterType="String"><!--사용자별 증겨찾기 목록 중 bookmark idx만  -->
+		select favorite_list.BOOKMARK
+		from favorite_list join user_info join bookmark join (SELECT bookmark.COMMENTS, contents.TITLE, bookmark.IDX
+		FROM bookmark join section join contents
+		WHERE bookmark.section = section.IDX and section.CONTENTS = contents.IDX) as bm_cnt
+		where favorite_list.USERINDEX = user_info.USERINDEX and bookmark.IDX = favorite_list.BOOKMARK and user_info.USERINDEX = #{userindex} and bm_cnt.IDX = bookmark.IDX;
+	</select>
+	
+	<insert id="insertFavorite"><!--즐겨찾기 추가  -->
+	insert into favorite_list(USERINDEX, BOOKMARK)
+	values(#{userindex} , #{bookmark});
+	</insert>
+	
+	<delete id="deleteFavorite"><!--즐겨찾기 제거  -->
+	delete from favorite_list
+	where USERINDEX=#{userindex} AND BOOKMARK = #{bookmark};
+	</delete>
+</mapper>

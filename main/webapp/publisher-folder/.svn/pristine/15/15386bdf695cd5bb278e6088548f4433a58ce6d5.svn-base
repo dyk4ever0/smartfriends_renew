@@ -1,0 +1,19 @@
+<!-- FOOTER [s] -->
+<footer>
+    <div class="footer_info">
+        <p class="logo"></p>
+        <p class="copy">Copyright ⓒ <strong><font color="F8981D">Daewoong</font></strong> Co.,Ltd All rights reserved</p>
+    </div>
+    <ul class="footer_global" style="padding-right:10px">
+    <li><a href="http://download.worksmobile.com/k/wminst/r/works/deploy_pcmsgapp_win32_exe" style="color: rgb(248, 152, 31);">베아월드 LW메신저</a></li>
+    <li><a href="javascript:openBearTalkITSM('simin','http://itsm.idstrust.com/memberLoginSSOchk.dmn','1280','800','itsm','status=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,resizable=yes');">IT 서비스</a></li>
+    <li><a href="javascript:NewWindow('/share/page/components/custom/dw/simpleRedirect/oldbearworld3','pc_help', 1024, 768, 'yes')">PC 서비스</a></li>
+    <li><a href="#">GMT+9:00</a></li>
+    </ul>
+</footer>
+<!-- FOOTER [e] -->
+
+<!-- SCRIPT -->
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/slick.min.js"></script>
+<script src="../js/script.js"></script>

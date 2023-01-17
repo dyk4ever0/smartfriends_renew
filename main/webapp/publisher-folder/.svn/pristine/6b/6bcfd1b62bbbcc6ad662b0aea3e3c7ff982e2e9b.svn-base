@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대웅 스마트워크</title>
+    <style>
+        body {margin:0;}
+        .inner {width: 1120px;margin:0 auto;}
+    </style>
+</head>
+<body>
+    <div class="inner">
+        <h1>대웅 스마트워크</h1>
+        <ul>
+            <li><a href="html/index.html">소개</a></li>
+            <li><a href="html/guide.html">가이드</a></li>
+        </ul>
+    </div>
+</body>
+</html>

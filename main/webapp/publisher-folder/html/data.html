@@ -1,0 +1,311 @@
+<!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/common.html" -->
+<body>
+    <!-- GNB -->
+    <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/header.html" -->
+
+    <!-- CONTENTS [s] --> 
+    <div class="contents-wrapper">
+        <div class="inner">
+			<div class="contents bgs">
+				<section>
+					<div class="inner">
+						<h2 class="section-title">통계 데이터</h2>
+					</div>
+				</section>
+			</div>
+
+			<section class="data-area">
+					<div class="inner">
+						<div class="tab-area">
+							<ul class="tab">
+								<li class="tab-link current" data-tab="tab-1">직책별</li>
+								<li class="tab-link" data-tab="tab-2">부서별</li>
+								<li class="tab-link" data-tab="tab-3">계열사별</li>
+							</ul>
+
+							<!-- 직책별 start -->
+							<div id="tab-1" class="tab-content current">
+								
+								<div class="data-choice">
+									<label class="radio mr-25">
+										<input type="radio" name="bt_01" value="01"  class="bt" checked><span class="mark"></span>직책자
+                                    </label>
+									<label class="radio">
+										<input type="radio" name="bt_01" value="02" class="bt"><span class="mark"></span>팀원
+									</label>
+								</div>
+
+								<div id="img_01" class="tab_section">
+									<div class="tab-inner item-score">
+											<div class="data-title">
+												<h2 class="section-title">직책자 데이터</h2>
+											</div>
+
+											<div class="columns-wrapper">
+												<div class="column">
+													<div class="graph-box">
+														<div class="graph">
+															<h3 class="title">숙련도 분포도</h3>
+															<div class="graph-zone">
+																
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="column">
+													<div class="graph-box">
+														<div class="graph">
+															<h3 class="title">도구별 점수 비교</h3>
+															<div class="graph-zone">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>
+								</div>  
+
+								<div id="img_02" class="tab_section">
+									<div class="tab-inner item-score">
+											<div class="data-title">
+												<h2 class="section-title">팀원 데이터</h2>
+											</div>
+
+											<div class="columns-wrapper">
+												<div class="column">
+													<div class="graph-box">
+														<div class="graph">
+															<h3 class="title">숙련도 분포도</h3>
+															<div class="graph-zone"></div>
+														</div>
+													</div>
+												</div>
+												<div class="column">
+													<div class="graph-box">
+														<div class="graph">
+															<h3 class="title">도구별 점수 비교</h3>
+															<div class="graph-zone"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>
+								</div> 
+							</div>
+							<!-- 직책별 end -->
+
+							<!-- 부서별 start -->
+							<div id="tab-2" class="tab-content">
+
+									<div class="tab-inner item-score">
+											<div class="data-title">
+												<h2 class="section-title">부서별 데이터</h2>
+												<div class="data-list-box">
+													<select name="main-list">
+														<option value="대웅제약" selected="selected">대웅제약</option>
+														<option value="엠서클">엠서클</option>
+														<option value="엠서클1">엠서클1</option>
+														<option value="기타">기타</option>
+													</select>
+
+													<select name="sub-list">
+														<option value="인사팀" selected="selected">인사팀</option>
+														<option value="개발팀">개발팀</option>
+														<option value="기획팀">기획팀</option>
+														<option value="기타">기타</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="department">
+												<div class="tab-2-left">
+													<p class="data-text">
+													<span>인사팀</span>은 스마트워크 진행을 위한<br>평균 도구 숙련도가 <span>'높은'</span> 수준이며<br>전체 부서 중 <span>'1등'</span> 입니다.
+													</p>
+													
+													<div class="join-area">
+														<p>참여도 25% <span class="data-text-sub">(155명 중 30명 응시)</span></p>
+														<p>1 / 25<span class="data-text-sub">(그룹부서 전체)</span></p>	
+													</div>
+
+													<div class="progress">
+														<ul class="progress-text">
+															<li class="verylow">
+																<div class="progress-box">매우낮은</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>
+															</li>
+															<li class="low">
+																<div class="progress-box">낮은</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>	
+															</li>
+															<li class="normal">
+																<div class="progress-box">보통</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>
+															</li>
+															<li class="high on">
+																<div class="progress-box">높은</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>
+															</li>
+															<li class="veryhigh">
+																<div class="progress-box">매우높은</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>	
+															</li>
+														</ul>
+														<progress max="100" value="0" class="progress-main" aria-labelledby="Progress-id">
+															<div class="Progress-bar" role="presentation">
+																<span class="Progress-value" style="width: 80%;">&nbsp;</span>
+															</div>
+														</progress>
+													</div>	
+
+												</div>
+												<div class="tab-2-right">
+													<div class="graph-box">
+														<div class="graph">
+															<h3 class="title">숙련도 분포도</h3>
+															<div class="graph-zone"></div>
+														</div>
+													</div>
+													<div class="graph-box graph-stick">
+														<div class="graph">
+															<h3 class="title">소속부서의 도구별 위치</h3>
+															<div class="graph-zone">
+														</div>
+														
+														</div>
+														<div class="graph-stick-text">x : 점수 / y : 도구 / 마커 : 최고점수값, 중간점수값 / 배경 색 : 하위30%, 중위 60%, 상위10% / 바 : 소속부서 점수</div>
+													</div>
+												</div>
+											</div>
+									</div>
+ 
+							</div>
+							<!-- 부서별 end-->
+
+							<!-- 계열사별 start-->
+							<div id="tab-3" class="tab-content">
+
+									<div class="tab-inner item-score">
+											<div class="data-title">
+												<h2 class="section-title">계열사별 데이터</h2>
+												<div class="data-list-box">
+													<select name="">
+														<option value="대웅제약" selected="selected">대웅제약</option>
+														<option value="엠서클">엠서클</option>
+														<option value="엠서클1">엠서클1</option>
+														<option value="기타">기타</option>
+													</select>
+
+													<select name="">
+														<option value="인사팀" selected="selected">인사팀</option>
+														<option value="개발팀">개발팀</option>
+														<option value="기획팀">기획팀</option>
+														<option value="기타">기타</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="department">
+												<div class="tab-2-left">
+													<p class="data-text">
+													<span>인사팀</span>은 스마트워크 진행을 위한<br>평균 도구 숙련도가 <span>'높은'</span> 수준이며<br>전체 부서 중 <span>'1등'</span> 입니다.
+													</p>
+													
+													<div class="join-area">
+														<p>참여도 25% <span class="data-text-sub">(155명 중 30명 응시)</span></p>
+														<p>1 / 25<span class="data-text-sub">(그룹부서 전체)</span></p>	
+													</div>
+
+													<div class="progress">
+														<ul class="progress-text">
+															<li class="verylow">
+																<div class="progress-box">매우낮은</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>
+															</li>
+															<li class="low">
+																<div class="progress-box">낮은</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>	
+															</li>
+															<li class="normal">
+																<div class="progress-box">보통</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>
+															</li>
+															<li class="high on">
+																<div class="progress-box">높은</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>
+															</li>
+															<li class="veryhigh">
+																<div class="progress-box">매우높은</div>
+																<div class="progress-icon"><span class="progress-check"></span></div>	
+															</li>
+														</ul>
+														<progress max="100" value="0" class="progress-main" aria-labelledby="Progress-id">
+															<div class="Progress-bar" role="presentation">
+																<span class="Progress-value" style="width: 80%;">&nbsp;</span>
+															</div>
+														</progress>
+													</div>	
+
+												</div>
+												<div class="tab-2-right">
+													<div class="graph-box">
+														<div class="graph">
+															<h3 class="title">숙련도 분포도</h3>
+															<div class="graph-zone"></div>
+														</div>
+													</div>
+													<div class="graph-box graph-stick">
+														<div class="graph">
+															<h3 class="title">소속부서의 도구별 위치</h3>
+															<div class="graph-zone">
+
+														</div>
+														<div class="graph-stick-text">x : 점수 / y : 도구 / 마커 : 최고점수값, 중간점수값 / 배경 색 : 하위30%, 중위 60%, 상위10% / 바 : 소속부서 점수</div>
+													</div>
+												</div>
+											</div>
+									</div>
+
+							</div>
+							<!-- 계열사별 end-->
+
+						</div>
+					</div>
+				</section>
+
+        </div>
+    </div>
+    
+	<!-- CONTENTS [e] -->
+
+<script>
+$(function(){
+	/* 탭 start */
+	$('ul.tab li').click(function(){
+		var tab_id = $(this).attr('data-tab');
+		$('ul.tab li').removeClass('current');
+		$('.tab-content').removeClass('current');
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	})
+	/* 탭 end */
+
+	/*  통계 데이터 직책자/팀원 라디오버튼 start*/
+   div_change();   
+   $(".bt").click(function() { div_change(); }); 
+
+	function div_change() {    
+	   var chk = $("input[name='bt_01']").filter(function() {if (this.checked) return this;}).val();  
+	   $(".tab_section").hide(); 
+	   $("#img_"+chk).show(); 
+	}  
+	/* 통계 데이터 직책자/팀원 라디오버튼 end */
+});
+</script>
+
+    <!-- FOOTER -->
+    <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/footer.html" -->
+</body>
+</html>
+
+

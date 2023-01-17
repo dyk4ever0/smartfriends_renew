@@ -1,0 +1,135 @@
+/* 모바일 메인페이지 css */
+html {
+	scroll-behavior: smooth;
+}
+
+.main-title {
+	position:absolute;
+	top: 17vh;
+	left: 6vw;
+	font-size: 7.5vw;
+	color: #fff;
+	text-shadow: 2px 2px 6px #4c4c4c73;
+	line-height: 1.2em;
+}
+
+.main-img {
+	width: 100px;
+	margin-left: 10px;
+	margin-top: 20px;
+}
+
+.about .section-title {
+	line-height: 1.5em;
+	letter-spacing: -0.05em;
+	font-size: 18px;
+	margin-bottom: 0.5em;
+	margin-top: 20px;
+}
+
+section.top-visual{
+	overflow: hidden;
+	margin: 0;
+}
+
+.text-box {
+	margin-top: 10px;
+	margin-bottom: 25px;
+}
+
+.text-box .hash-tag {
+	color: #bb9dd6;
+	margin: 40px 0 0;
+	font-weight: 500;
+	margin: 40px 0 0;
+}
+
+.text-box p>b {
+	font-weight: 650;
+}
+
+.text-box p {
+	font-size: 12px;
+}
+
+.top-visual img{
+	width: 160%!important;
+	margin-left: -100px;
+}
+
+.contents-wrapper .top-visual .inner-cover {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: #22212359;
+	z-index: 2;
+}
+
+.top-visual a {
+pointer-events: none; /*이벤트를 막음*/
+cursor: default; /*마우스 커서를 포인트에서 디폴트로 변경*/
+}
+
+.contents-wrapper .about {
+	background: #E8EFF4 0% 0% no-repeat padding-box;
+	opacity: 1;
+	/* align-items: baseline; */
+	vertical-align: center;
+}
+
+.contents-wrapper .about .inner {
+	background: #FFFFFF 0% 0% no-repeat padding-box;
+	border-radius: 9px;
+	opacity: 1;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.contents-wrapper .document {
+	background : #F2F2F2 0% 0% no-repeat padding-box;
+	opacity: 1;
+	vertical-align: center;
+}
+
+.contents-wrapper .document .inner {
+	background: #FFFFFF 0% 0% no-repeat padding-box;
+	border-radius: 9px;
+	opacity: 1;
+	margin-left: 20px;
+	margin-right: 20px;
+	padding-top : 20px;
+	padding-bottom: 20px;
+}
+
+section .title {
+	line-height: 38px;
+	letter-spacing: -0.02em;
+	color : #d2d2d2;
+}
+
+/* functionality introduction css */
+.text-box .page-title {
+	font-weight: 600;
+	font-size: 16px;
+	color: #bb9dd6;
+	margin-bottom: 8px;
+}
+
+.text-box .page-text {
+	font-weight: 600;
+	font-size: 18px;
+	color: #121212;
+	margin-bottom: 30px;
+}
+
+.page-img-lf {
+	width: 350px;
+	margin-left: 10px;
+	margin-top: 30px;
+}
+
+.icon-list li {
+	float: left;
+	margin-top: 10px;
+	margin-right: 24px;
+}

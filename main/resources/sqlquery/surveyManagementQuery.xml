@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dwsws">
+	<!-- <select id="checkTableExistence" parameterType="String" resultType="int">
+		select count(*) from ${toolname}_question_list, ${toolname}_recent_test_result, ${toolname}_test_result
+	</select> -->
+	
+	<select id="checkTableExistence" parameterType="String" resultType="String">
+		show tables like '${parameter}'
+	</select>
+	
+	<select id="createNewSurveyTable" parameterType="String" resultType = "int">
+		${executeSql};
+	</select>
+	
+	<insert id="registerNewSurveyInfo" parameterType="map">
+		insert into test_offer_tools (TOOL, ENTRYUSERINDEX) values (#{toolname}, #{userindex})
+	</insert>
+	
+	<delete id="deleteOneTestOfferTool" parameterType="String">
+		DELETE FROM `test_offer_tools` WHERE (TOOL = #{toolname})
+	</delete>
+	
+	<select id = "callMngQuestionData" parameterType="String" resultType="mngQuestions">
+		select questions.IDX IDX,
+			questions.QUESTION QUESTION,
+	        questions.ANSWER ANSWER,
+	        questions.TOOLIDX TOOLIDX,
+			contents.TITLE TOOLNAME,
+            section.IDX SECIDX,
+            section.COMMENTS SECNAME,
+	        questions.BMKIDX BMKIDX,
+	        bookmark.COMMENTS BMKCOMMENT,
+	        questions.ENTRYUSERINDEX,
+	        questions.ENTRYDATE,
+	        questions.UPDATEUSERINDEX,
+	        questions.UPDATEDATE
+		from ${toolname}_question_list questions, contents, bookmark, test_offer_tools tools, section
+	    where questions.TOOLIDX = tools.IDX
+			and bookmark.SECTION = section.IDX
+			and questions.BMKIDX = bookmark.IDX
+			and contents.TITLE = tools.TOOL
+	</select>
+	
+	<select id = "callSelectionDataByToolname" parameterType = "String" resultType = "mngQuestions">
+		select section.IDX SECIDX,
+			section.COMMENTS SECCOMMENT,
+	        bookmark.IDX BMKIDX,
+	        bookmark.COMMENTS BMKCOMMENT
+		from section, bookmark, contents
+		where contents.TITLE = #{toolname}
+			and section.CONTENTS = contents.IDX
+	        and section.IDX = bookmark.SECTION
+	</select>
+	
+	<update id="updateSurveyMngChange" parameterType="map">
+		update ${toolname}_question_list set
+		<if test="bmkidx != null">
+			BMKIDX = #{bmkidx}
+		</if>
+		<if test="bmkidx != null and answer != null">
+			and
+		</if>
+		<if test="answer != null">
+			ANSWER = #{answer}
+		</if>
+		where IDX = #{targetIdx}
+	</update>
+	
+	<insert id="insertSurveyMngChange" parameterType = "map">
+		insert into ${toolname}_question_list (QUESTION, ANSWER, TOOLIDX, BMKIDX, ENTRYUSERINDEX)
+		values
+		(
+			#{question}, #{answer}, #{toolidx}, #{bmkidx}, #{entryuserindex}
+		)
+	</insert>
+	
+	<delete id="deleteSurveyMngChange" parameterType="map">
+		delete from ${toolname}_question_list where (IDX = #{idx})
+	</delete>
+	
+	<delete id="deleteAllSurvey" parameterType="String">
+		delete from ${toolname}_question_list
+	</delete>
+	
+	<select id="callToolidxByToolname" parameterType = "String" resultType = "int">
+		select IDX from test_offer_tools where TOOL = #{toolname}
+	</select>
+</mapper>

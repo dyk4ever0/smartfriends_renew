@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dwsws">
+	<select id = "userRankingDataExistenceCheckByUserindex" parameterType = "String" resultType = "int">
+		SELECT EXISTS(SELECT * from user_ranking WHERE USERINDEX = #{userindex}) rowNum;
+	</select>
+	
+	<select id = "getTotalscoreByUserindex" parameterType = "String" resultType = "int">
+		select TOTALSCORE from user_ranking where USERINDEX = #{userindex}
+	</select>
+	
+	<select id = "getRankingFromRecentData" parameterType="map" resultType="int">
+		select RANKING from (
+			select RANK() over (order by TOTALSCORE desc) RANKING,
+			ranking_temp.USERINDEX, ranking_temp.USERNAME from (
+			select SUM(
+			<foreach collection = "testOfferTools" item = "item" separator="+">
+			${item}.TOTALSCORE
+			</foreach>
+			) TOTALSCORE,
+			user_info.USERINDEX, user_info.USERNAME
+			from 
+            <foreach collection = "testOfferTools" item = "item" separator="," close = ",">
+				${item}_recent_test_result ${item}
+			</foreach>
+            user_info
+			where 
+			<foreach collection = "testOfferTools" item = "item" separator=" and ">
+				user_info.USERINDEX = ${item}.USERINDEX
+			</foreach>
+			group by user_info.USERINDEX, user_info.USERNAME
+            ) ranking_temp
+            ) single_ranking_get
+            where single_ranking_get.USERINDEX = #{userindex}
+	</select>
+	
+	<update id = "updateRankNewly" parameterType = "map">
+		update user_ranking
+			set RANKING = RANKING + 1
+			where TOTALSCORE <![CDATA[<]]>
+			(
+			select SUM(
+				<foreach collection = "testOfferTools" item = "item" separator="+">
+				${item}.TOTALSCORE
+				</foreach>
+				) TOTALSCORE
+					from
+					<foreach collection = "testOfferTools" item = "item" separator="," close = ",">
+						${item}_recent_test_result ${item}
+					</foreach>
+					user_info
+					where
+					<foreach collection = "testOfferTools" item = "item" separator=" and ">
+						user_info.USERINDEX = ${item}.USERINDEX
+					</foreach>
+					and user_info.USERINDEX = #{userindex}
+					group by user_info.USERINDEX, user_info.USERNAME
+			)
+	</update>
+	
+	<update id = "rankIncrease" parameterType = "map">
+		update user_ranking set RANKING = RANKING + 1
+			where TOTALSCORE between #{mycurrentTotalscore} and
+			(
+			select SUM(
+				<foreach collection = "testOfferTools" item = "item" separator="+">
+				${item}.TOTALSCORE
+				</foreach>
+				) TOTALSCORE
+					from
+					<foreach collection = "testOfferTools" item = "item" separator="," close = ",">
+						${item}_recent_test_result ${item}
+					</foreach>
+					user_info
+					where
+					<foreach collection = "testOfferTools" item = "item" separator=" and ">
+						user_info.USERINDEX = ${item}.USERINDEX
+					</foreach>
+					and user_info.USERINDEX = #{userindex}
+					group by user_info.USERINDEX, user_info.USERNAME
+			) - 1
+	</update>
+	
+	<update id = "rankDecrease" parameterType = "map">
+		update user_ranking set RANKING = RANKING - 1
+			where TOTALSCORE between
+			(
+			select SUM(
+				<foreach collection = "testOfferTools" item = "item" separator="+">
+				${item}.TOTALSCORE
+				</foreach>
+				) TOTALSCORE
+					from
+					<foreach collection = "testOfferTools" item = "item" separator="," close = ",">
+						${item}_recent_test_result ${item}
+					</foreach>
+					user_info
+					where
+					<foreach collection = "testOfferTools" item = "item" separator=" and ">
+						user_info.USERINDEX = ${item}.USERINDEX
+					</foreach>
+					and user_info.USERINDEX = #{userindex}
+					group by user_info.USERINDEX, user_info.USERNAME
+			)
+			and
+			#{mycurrentTotalscore} - 1
+	</update>
+	
+	<insert id = "insertMyNewRankData" parameterType = "map">
+		insert into user_ranking
+			(
+			USERINDEX, USERNAME, TOTALSCORE, RANKING, DUTYCODE, COMPANYNAME, ORGNAME, ENTRYUSERINDEX,
+			UPDATEUSERINDEX) values
+			(
+			#{userindex}, #{username},
+			(
+			select SUM(
+			<foreach collection = "testOfferTools" item = "item" separator="+">
+			${item}.TOTALSCORE
+			</foreach>
+			) TOTALSCORE
+						from
+			            <foreach collection = "testOfferTools" item = "item" separator="," close = ",">
+							${item}_recent_test_result ${item}
+						</foreach>
+			            user_info
+						where
+			            <foreach collection = "testOfferTools" item = "item" separator=" and ">
+							user_info.USERINDEX = ${item}.USERINDEX
+						</foreach>
+			            and user_info.USERINDEX = #{userindex}
+						group by user_info.USERINDEX, user_info.USERNAME
+			),
+			#{mynewRanking},
+			(select DUTYCODE from user_info where USERINDEX = #{userindex}),
+			(select COMPANYNAME from user_info where USERINDEX = #{userindex}),
+			(select ORGNAME from user_info where USERINDEX = #{userindex}),
+			#{userindex},
+			#{userindex}
+			)
+	</insert>
+	
+	<update id = "updateMyNewRankData" parameterType = "map">
+		update user_ranking
+			set
+			RANKING = #{mynewRanking}, TOTALSCORE = 
+			(
+			select SUM(
+				<foreach collection = "testOfferTools" item = "item" separator="+">
+				${item}.TOTALSCORE
+				</foreach>
+				) TOTALSCORE
+					from
+					<foreach collection = "testOfferTools" item = "item" separator="," close = ",">
+						${item}_recent_test_result ${item}
+					</foreach>
+					user_info
+					where
+					<foreach collection = "testOfferTools" item = "item" separator=" and ">
+						user_info.USERINDEX = ${item}.USERINDEX
+					</foreach>
+					and user_info.USERINDEX = #{userindex}
+					group by user_info.USERINDEX, user_info.USERNAME
+			),
+			DUTYCODE = (select DUTYCODE from user_info where USERINDEX = #{userindex}),
+			COMPANYNAME = (select COMPANYNAME from user_info where USERINDEX = #{userindex}),
+			ORGNAME = (select ORGNAME from user_info where USERINDEX = #{userindex}),
+			UPDATEUSERINDEX = #{userindex}
+			where USERINDEX = #{userindex}
+	</update>
+	
+	<update id = "updateNothing" parameterType = "String">
+		update user_ranking
+			set
+			UPDATEUSERINDEX = #{userindex},
+			UPDATEDATE = current_timestamp
+			where USERINDEX = #{userindex}
+	</update>
+</mapper>

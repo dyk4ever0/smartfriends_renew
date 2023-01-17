@@ -1,0 +1,30 @@
+<!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/common.html" -->
+<body>
+    <!-- GNB -->
+    <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/header.html" -->
+
+    <!-- CONTENTS [s] -->
+    <div class="contents-wrapper bg-blue error">
+        <div class="inner">
+            <div class="contents">
+                <section>
+                    <div class="inner">
+                        <div class="error-box">
+                            <h2 class="code">500 Error</h2>
+                            <p class="message">[내 정보] 페이지에 ac접근 중 에러가 발생했습니다. <br>추가 워딩의 경우 두줄로 표기되며 텍스트박스 가로는 550입니다.</p>
+                            <p class="description">‘박승수’님의 진단 데이터가 아직 없습니다. <br>[내 정보] 페이지에 접근을 원하시면 [진단]을 수행해주세요. <br>텍스트박스 가로 550입니다.</p>
+                        </div>
+                        <p class="button-wrapper">
+                            <a href="#" class="square-btn">메인으로 이동</a>
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENTS [e] -->
+
+    <!-- FOOTER -->
+    <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/footer.html" -->
+</body>
+</html>

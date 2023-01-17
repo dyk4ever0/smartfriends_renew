@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false"/>
+		<setting name="localCacheScope" value="STATEMENT"/>
+	</settings>
+	
+	<!-- 패키지 경로 단축어 -->
+	<typeAliases>
+		<!-- DTO package aliases -->
+		<typeAlias type="dwsws.dto.categoryDTO" alias="test"/>
+		<typeAlias type="dwsws.dto.bookmarkDTO" alias="bookmark"/>
+		<typeAlias type="dwsws.dto.userInfoDTO" alias="login"/>
+		<typeAlias type="dwsws.dto.contentsDTO" alias="contents"/>
+		<typeAlias type="dwsws.dto.favoriteListDTO" alias="favorite"/>
+		<typeAlias type="dwsws.dto.questionListDTO" alias="question"/>
+		<typeAlias type="dwsws.dto.ruleDTO" alias="rule"/>
+		<typeAlias type="dwsws.dto.sectionDTO" alias="section"/>
+		<typeAlias type="dwsws.dto.smartworkRuleDTO" alias="smartwork"/>
+		<typeAlias type="dwsws.dto.testOfferToolDTO" alias="tool"/>
+		<typeAlias type="dwsws.dto.testResultDTO" alias="result"/>
+		<typeAlias type="dwsws.dto.userInfoDTO" alias="user"/>
+		<typeAlias type="dwsws.dto.userAuthDTO" alias="userauth"/>
+		<typeAlias type="dwsws.dto.questionListDTO" alias="questions"/>
+		<typeAlias type="dwsws.dto.digitalDTO" alias="digital"/>
+		
+		<!-- outputdata package aliases -->
+		<typeAlias type="dwsws.outputdata.testResultWithToolnameDO" alias="testResult" />
+		<typeAlias type="dwsws.outputdata.compareDataForCalcScoreDO" alias="testCompareData" />
+		<typeAlias type="dwsws.outputdata.SmartworkRuleDO" alias="resultRule"/>
+		<typeAlias type="dwsws.outputdata.UserFavoriteList" alias="userFavorite"/>
+		<typeAlias type="dwsws.outputdata.suggestionListFormDO" alias="suggestion"/>
+		<typeAlias type="dwsws.outputdata.GuideinfoDO" alias="guideInfo" />
+		<typeAlias type="dwsws.outputdata.bookmarkDO" alias="bmk" />
+		<typeAlias type="dwsws.outputdata.contentsInfoDO" alias="contentsInfo" />
+		<typeAlias type="dwsws.outputdata.sectionListforEdit" alias="sectionList" />
+		<typeAlias type="dwsws.outputdata.recentTestDataOnMyinfoDO" alias="recentDataInMyinfo" />
+		<typeAlias type="dwsws.outputdata.sectionIndexFromQuestionDO" alias="sectionIdxByQuestion" />
+		<typeAlias type="dwsws.outputdata.numberOfSkillListDO" alias="numberOfSkillListDO" />
+		<typeAlias type="dwsws.outputdata.bmkSelectDO" alias="bmkSelectDO" />
+		<typeAlias type="dwsws.outputdata.authorizationListDO" alias="authlist" />
+		<typeAlias type="dwsws.outputdata.digitalBoardDO" alias="digitalBoard" />
+		<typeAlias type="dwsws.outputdata.questionManagementListDO" alias="mngQuestions" />
+	</typeAliases>
+</configuration>
+

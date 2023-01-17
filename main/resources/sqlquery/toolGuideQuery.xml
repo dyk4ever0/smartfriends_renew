@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="dwsws">
+ 
+ 	<!--select tool, comments, youtubeurl  -->
+	<select id="selectGuideInfo" resultType="guideInfo" parameterType="String">
+		select TITLE, contents.COMMENTS, YOUTUBEURL
+		from category join contents
+		where contents.CATEGORY = category.IDX and TITLE=#{tool}
+	</select>
+	
+	
+	
+	<!--section list  -->
+	<select id="selectSectionList" resultType="String" parameterType="String">
+			select section.COMMENTS
+		from section join (select contents.IDX, TITLE, contents.COMMENTS, YOUTUBEURL
+		from category join contents
+		where contents.CATEGORY = category.IDX and TITLE=#{tool}) as category_cnt
+		where section.CONTENTS = category_cnt.IDX
+		order by section.COMMENTS*1;
+	</select>
+	
+	<!--select section list num  -->
+	<select id="selectSectionListNum" resultType="int" parameterType="String">
+		select count(*)
+		from section join (select contents.IDX, TITLE, contents.COMMENTS, YOUTUBEURL
+		from category join contents
+		where contents.CATEGORY = category.IDX and TITLE=#{tool}) as category_cnt
+		where section.CONTENTS = category_cnt.IDX;
+	</select>
+	
+	<!--select bookmark list  -->
+	<select id="selectBMKList" resultType="bmk" parameterType="Map">
+	select section.IDX, section.COMMENTS as SECTION, TIMEMOMENT, bookmark.COMMENTS AS BOOKMARK, YOUTUBEURL, bookmark.idx as bmkidx
+	from section join bookmark join (select contents.IDX, TITLE, contents.COMMENTS, YOUTUBEURL
+	from category join contents
+	where contents.CATEGORY = category.IDX and TITLE=#{tool}) as category_cnt
+	where section.CONTENTS = category_cnt.IDX and bookmark.SECTION = section.IDX and section.COMMENTS=#{comments}
+	order by TIMEMOMENT ASC; 
+	</select>
+	
+	<!--도구가이드 목록  -->
+	<select id="selectToolguideList" resultType="String">
+	select TITLE
+	from category join contents
+	where contents.CATEGORY = category.IDX AND category.COMMENTS="도구 가이드"
+	order by title asc;
+	</select>
+ 
+ 
+ </mapper>

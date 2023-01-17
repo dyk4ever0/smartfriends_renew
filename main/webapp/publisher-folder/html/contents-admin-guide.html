@@ -1,0 +1,216 @@
+<!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/common.html" -->
+<body>
+    <!-- GNB -->
+    <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/header.html" -->
+
+    <!-- CONTENTS [s] -->
+    <div class="contents-wrapper contents-header bg-blue">
+        <section class="header-tab">
+            <div class="inner">
+                <h2 class="section-title">스마트워크 Rule</h2>
+                <ul class="tab">
+                    <li class="tab-link current"><a href="#">가이드관리</a></li>
+                    <li class="tab-link"><a href="#">진단관리</a></li>
+                    <li class="tab-link"><a href="#">권한관리</a></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <div class="contents-wrapper has-side-menu">
+        <div class="inner">
+            <!-- LNB [s] -->
+            <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/contents-admin-lnb.html" -->
+            <!-- LNB [e] -->
+            <div class="contents">
+                <section>
+                    <div class="inner">
+                        <h3 class="section-title">스마트워크 Rule</h3>
+                    </div>
+                </section>
+                
+                <form action="#" class="form">
+                    <div class="inner">
+                        <fieldset>
+                            <legend class="sr-only">기본 정보</legend>
+                            <table>
+                                <colgroup>
+                                    <col style="width:75px">
+                                    <col style="width:330px">
+                                    <col>
+                                    <col>
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><label for="videoTitle">제목</label></th>
+                                        <td><input type="text" size="10"  id="videoTitle" onkeyup="javascript:CheckSize();" class="common" placeholder="영상의 제목을 입력하세요."></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="videoUrl">영상 URL</label></th>
+                                        <td colspan="3">
+                                            <input type="text" name="" id="videoUrl" class="common btn-padding" placeholder="영상 URL을 입력하세요.">
+                                            <button type="button" class="simple">확인</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><span class="sr-only">미리보기</span></th>
+                                        <td colspan="3">
+                                            <div class="preview-area">
+                                                <p>URL 입력 후 확인 버튼을 클릭하시면 영상을 보실 수 있습니다. </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                        <fieldset class="border-type">
+                            <legend class="sr-only">섹션 추가</legend>
+                            <table>
+                                <colgroup>
+                                    <col style="width:70px">
+                                    <col style="width:170px">
+                                    <col>
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><label for="section1Title">섹션 제목</label></th>
+                                        <td colspan="2"><input type="text" name="" id="sectionTitle1" class="common" placeholder="북마크 묶음인 섹션의 제목을 입력하세요."></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="section1Bookmark1">북마크</label></th>
+                                        <td class="timestamp-field">
+												<div class="data-list-box front-select">
+													<select name="main-list">
+														<option value="대웅제약" selected="selected">대웅제약</option>
+														<option value="엠서클">엠서클</option>
+														<option value="엠서클1">엠서클1</option>
+														<option value="기타">기타</option>
+													</select>
+												</div>
+                                        </td>
+                                        <td>
+											<div class="data-list-box back-select">
+												<select name="main-list">
+													<option value="대웅제약" selected="selected">대웅제약</option>
+													<option value="엠서클">엠서클</option>
+													<option value="엠서클1">엠서클1</option>
+													<option value="기타">기타</option>
+												</select>
+												<button type="button" class="simple">삭제</button>
+											</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="section1Bookmark2">북마크</label></th>
+                                        <td class="timestamp-field">
+												<div class="data-list-box front-select">
+													<select name="main-list">
+														<option value="대웅제약" selected="selected">대웅제약</option>
+														<option value="엠서클">엠서클</option>
+														<option value="엠서클1">엠서클1</option>
+														<option value="기타">기타</option>
+													</select>
+												</div>
+                                        </td>
+                                        <td>
+											<div class="data-list-box back-select">
+												<select name="main-list">
+													<option value="대웅제약" selected="selected">대웅제약</option>
+													<option value="엠서클">엠서클</option>
+													<option value="엠서클1">엠서클1</option>
+													<option value="기타">기타</option>
+												</select>
+												<button type="button" class="simple">삭제</button>
+											</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                        <fieldset class="border-type">
+                            <legend class="sr-only">섹션 추가</legend>
+                            <table>
+                                <colgroup>
+                                    <col style="width:70px">
+                                    <col style="width:170px">
+                                    <col>
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><label for="section1Title">섹션 제목</label></th>
+                                        <td colspan="2"><input type="text" name="" id="sectionTitle1" class="common" placeholder="북마크 묶음인 섹션의 제목을 입력하세요."></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="section2Bookmark1">북마크</label></th>
+                                        <td class="timestamp-field">
+												<div class="data-list-box front-select">
+													<select name="main-list">
+														<option value="대웅제약" selected="selected">테스트</option>
+														<option value="엠서클">메뉴1</option>
+														<option value="엠서클1">메뉴2</option>
+														<option value="기타">메뉴3</option>
+													</select>
+												</div>
+                                        </td>
+                                        <td>
+											<div class="data-list-box back-select">
+												<select name="main-list">
+													<option value="대웅제약" selected="selected">대웅제약</option>
+													<option value="엠서클">엠서클</option>
+													<option value="엠서클1">엠서클1</option>
+													<option value="기타">기타</option>
+												</select>
+												<button type="button" class="simple">삭제</button>
+											</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="section2Bookmark2">북마크</label></th>
+										<td class="timestamp-field">
+												<div class="data-list-box front-select">
+													<select name="main-list">
+														<option value="대웅제약" selected="selected">대웅제약</option>
+														<option value="엠서클">엠서클</option>
+														<option value="엠서클1">엠서클1</option>
+														<option value="기타">기타</option>
+													</select>
+												</div>
+                                        </td>
+                                        <td>
+											<div class="data-list-box back-select">
+												<select name="main-list">
+													<option value="대웅제약" selected="selected">대웅제약</option>
+													<option value="엠서클">엠서클</option>
+													<option value="엠서클1">엠서클1</option>
+													<option value="기타">기타</option>
+												</select>
+												<button type="button" class="simple">삭제</button>
+											</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="btn-wrapper">
+                                            <button type="button" class="simple">섹션 삭제</button>
+                                            <button type="button" class="simple">북마크 추가</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                        <fieldset class="btn-wrapper">
+                            <button type="button" class="square-btn gray">취소</button>
+                            <button type="button" class="square-btn">수정완료</button>
+                            <button type="button" class="square-btn border text-icon large">+<span class="sr-only">추가</span></button>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENTS [e] -->
+
+    <!-- FOOTER -->
+    <!--#include virtual="/view/SVNProject/working/etc/smartwork/html/include/footer.html" -->
+
+
+</body>
+</html>

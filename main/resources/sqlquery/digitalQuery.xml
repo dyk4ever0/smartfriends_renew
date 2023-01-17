@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dwsws">
+	<!--디지털창 목록 -->
+	<select id="selectDigitalList" resultType="String">
+		select TITLE
+		from category join contents
+		where contents.CATEGORY = category.IDX AND category.COMMENTS="디지털창"
+		group by title
+		order by case when TITLE in ('베아월드') then 0 
+				  when TITLE in ('간편도구') then 1 
+                  when TITLE in ('FIORI') then 2 
+                  else title end, TITLE;
+	</select>
+	<!-- 디지털창 -->
+	<select id="selectDigitalContentsList" resultType="digitalBoard" parameterType="String">
+		select idx, comments, title
+		from contents
+		where category=5 and title=#{title};
+	</select>
+	
+	<select id="selectDigitalImgByIdx" resultType="String" parameterType="int">
+		select ROUTE
+		from tip_imgs
+		where CONTENTSIDX = #{contentsIdx}
+		order by ENTRYDATE;
+	</select>
+	
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dwsws">
+	<select id="callQuestionsByTool" parameterType="String"
+		resultType="questions">
+		select * from ${toolname}_question_list
+	</select>
+
+	<select id="callRecentTestResultByTool" parameterType="map"
+		resultType="testResult">
+		select TOOL as TOOLNAME, ${toolname}_result.* from ${toolname}_test_result ${toolname}_result 
+		left join test_offer_tools
+		tools on tools.IDX = ${toolname}_result.TOOLIDX
+		where USERINDEX = #{userindex} and
+		TRIALNUM = (select MAX(${toolname}_temp.TRIALNUM) from
+		${toolname}_test_result ${toolname}_temp 
+		where ${toolname}_result.USERINDEX = ${toolname}_temp.USERINDEX)
+	</select>
+
+	<select id="callTestOfferingTools" resultType="String">
+		select TOOL from
+		test_offer_tools
+	</select>
+
+	<select id="callQuestionNum" parameterType="String"
+		resultType="int">
+		SELECT count(IDX) FROM ${toolname}_question_list;
+	</select>
+
+	<select id="callCompareDataForCalcScore" parameterType="String"
+		resultType="testCompareData">
+		select question_list.IDX as QUESTIONIDX,
+				BMKIDX,
+				bookmark.SECTION as SECIDX,
+				question_list.TOOLIDX,
+				question_list.QUESTION,
+				question_list.ANSWER,
+				question_list.UPDATEUSERINDEX,
+				question_list.UPDATEDATE,
+				question_list.ENTRYUSERINDEX,
+				question_list.ENTRYDATE
+		from
+		${toolname}_question_list question_list
+		left join bookmark
+		on
+		question_list.BMKIDX = bookmark.IDX
+	</select>
+
+	<select id="callSectionByEntryDate" parameterType="String"
+		resultType="section">
+		select section.IDX, section.COMMENTS, section.CONTENTS,
+		section.UPDATEUSERINDEX, section.UPDATEDATE, section.ENTRYUSERINDEX,
+		section.ENTRYDATE from section left join contents on section.CONTENTS
+		= contents.IDX where contents.TITLE = #{toolname}
+	</select>
+	
+	<select id="callranking" parameterType="map" resultType="int">
+		select count(*) as ranking
+		from ${toolname}_test_result ${toolname}_result
+		left join test_offer_tools tools 
+		on tools.IDX = ${toolname}_result.TOOLIDX 
+		where TRIALNUM = (select MAX(${toolname}_temp.TRIALNUM) 
+		from ${toolname}_test_result ${toolname}_temp
+		where ${toolname}_result.USERINDEX = ${toolname}_temp.USERINDEX)
+		and TOTALSCORE >= #{currentscore}
+	</select>
+	
+	<select id="callNumberOfTestData" parameterType="String" resultType="int">
+		select count(*) as numofdata from ${toolname}_test_result ${toolname}_result 
+			left join test_offer_tools
+			tools on tools.IDX = ${toolname}_result.TOOLIDX
+			where TRIALNUM = (select MAX(${toolname}_temp.TRIALNUM) from
+			${toolname}_test_result ${toolname}_temp 
+			where ${toolname}_result.USERINDEX = ${toolname}_temp.USERINDEX)
+	</select>
+	
+	<insert id="saveUserTestResultData" parameterType="map">
+		insert into ${toolname}_test_result
+		<foreach collection = "answerNum" item = "item" open="(" separator=",">
+			${item}
+		</foreach>
+		,USERINDEX, TOOLIDX, USERNAME, DUTYCODE, COMPANYNAME, ORGNAME, TRIALNUM, TOTALSCORE, SKILL) 
+		values (
+		<foreach collection = "resultdata" item = "item" close="," separator=",">
+			${item}
+		</foreach>
+		#{userindex},
+		(select IDX as TOOLIDX from test_offer_tools where test_offer_tools.TOOL = #{toolname}),
+		(select USERNAME from user_info where user_info.USERINDEX = #{userindex}),
+		(select DUTYCODE from user_info where user_info.USERINDEX = #{userindex}),
+		(select COMPANYNAME from user_info where user_info.USERINDEX = #{userindex}),
+		(select ORGNAME from user_info where user_info.USERINDEX = #{userindex}),
+		#{trialnum},
+		#{totalscore},
+		#{skill}
+		)
+	</insert>
+	
+	<insert id="updateRecentTestResult" parameterType="map">
+		insert into ${toolname}_recent_test_result
+		(TOOLIDX, USERINDEX, USERNAME, TOTALSCORE, SKILL, DUTYCODE,COMPANYNAME, ORGNAME) values 
+		(
+		(select IDX as TOOLIDX from test_offer_tools where test_offer_tools.TOOL = #{toolname}),
+		#{userindex},
+		(select USERNAME from user_info where user_info.USERINDEX = #{userindex}),
+		#{totalscore},
+		#{skill},
+		(select DUTYCODE from user_info where USERINDEX = #{userindex}),
+		(select COMPANYNAME from user_info where USERINDEX = #{userindex}),
+		(select ORGNAME from user_info where USERINDEX = #{userindex})
+		)
+		on duplicate key update
+		TOTALSCORE = #{totalscore},
+        SKILL = #{skill},
+        DUTYCODE = (select DUTYCODE from user_info where USERINDEX = #{userindex}),
+        COMPANYNAME = (select COMPANYNAME from user_info where USERINDEX = #{userindex}),
+        ORGNAME = (select ORGNAME from user_info where USERINDEX = #{userindex})
+	</insert>
+	
+	<insert id="dummyRecentTestResult" parameterType="map">
+		insert into ${toolname}_recent_test_result
+		(TOOLIDX, USERINDEX, USERNAME, TOTALSCORE, SKILL, DUTYCODE,COMPANYNAME, ORGNAME) values 
+		(
+		(select IDX as TOOLIDX from test_offer_tools where test_offer_tools.TOOL = #{toolname}),
+		#{userindex},
+		#{username},
+		0,
+		NULL,
+		(select DUTYCODE from user_info where USERINDEX = #{userindex}),
+		(select COMPANYNAME from user_info where USERINDEX = #{userindex}),
+		(select ORGNAME from user_info where USERINDEX = #{userindex})
+		)
+		on duplicate key update
+		USERINDEX = USERINDEX
+	</insert>
+	
+	<select id="suggestionReturn" parameterType="map" resultType="suggestion">
+		select bookmark.IDX IDX,
+			bookmark.COMMENTS BMKCOMMENT,
+	        bookmark.TIMEMOMENT BMKTIME,
+	        bookmark.SECTION SECINDEX,
+	        bookmark.IDX BMKINDEX,
+			test_offer_tools.IDX TOOLINDEX,
+	        test_offer_tools.TOOL TOOLNAME,
+	        section.COMMENTS SECNAME,
+			category.COMMENTS CATEGORY
+	        from bookmark, section, test_offer_tools, category, contents
+		        where bookmark.IDX = #{bmkidx}
+		         and section.IDX = #{secidx}
+		         and test_offer_tools.IDX = #{toolidx}
+		         and contents.TITLE = test_offer_tools.TOOL
+                 and contents.CATEGORY = category.IDX
+	</select>
+
+</mapper>

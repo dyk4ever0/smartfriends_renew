@@ -1,0 +1,128 @@
+.modal {
+    z-index:200;
+}
+.common-layer {
+    display:none;
+
+    position:fixed;
+    left:0;right:0;
+    top:0;bottom:0;
+    background:rgba(0,0,0,0.8);
+    color:#121212;
+    overflow-x:hidden;
+    overflow-y:auto;
+
+    .layer {
+        margin-top:50px;
+        background:#ffffff;
+        border-radius: 1rem 1rem 0 0;
+        min-height:calc(100% - 50px);
+    }
+    .layer-header {
+        position:relative;
+        padding:1rem;
+        .title {
+            font-size:14px;
+            font-weight:700;
+            color:$dwYellow;
+        }
+        .close {
+            right:1rem;
+            top:1rem;
+            margin-top:-2px;
+        }
+    }
+    .layer-body {
+        padding-top:0.5rem;
+        padding-left:20px;
+        padding-right:20px;
+        padding-bottom:50px;
+        .title {
+            margin-bottom:0.5em;
+            font-size:17px;
+            font-weight:700;
+        }
+    }
+    .close {
+        &:before,
+        &:after {
+            background:#121212;
+        }
+    }
+
+    &.active {
+        display:block;
+    }
+}
+
+#videoPopup {
+    .layer-body {
+        padding-left:0;
+        padding-right:0;
+    }
+    .video-carousel {
+        display:none;
+
+        // slick ui
+        .slick-arrow {position:absolute;top:10px;width:12px;height:25px;padding:0;border:none;background:rgba(0,0,0,0);z-index:1;text-indent:-9999em;outline:none;cursor:pointer;}
+        .slick-arrow.slick-disabled {visibility:hidden;}
+        .slick-arrow:after {content:'';display:block;position:absolute;left:50%;top:50%;width:16px;height:16px;border-left:1px solid #121212;border-bottom:1px solid #121212;}
+        .slick-prev {left:20px;}
+        .slick-prev:after {transform:translate(-15%, -50%) rotate(45deg)}
+        .slick-next {right:20px;}
+        .slick-next:after {transform:translate(-85%, -50%) rotate(-135deg)}
+        .slick-dots {position:absolute;left:50%;bottom:25px;transform:translateX(-50%);width:auto;padding:0;margin:0;font-size:0;text-align:center;line-height:0;}
+        .slick-dots li {display:inline-block;margin:0 4px;}
+        .slick-dots button {width:8px;height:8px;background:#fff;border:none;border-radius:50%;padding:0;font-size:1rem;text-indent:-9999em;}
+        .slick-dots .slick-active button {background:#cc9145;}
+
+        .header {
+            padding:0 20px;
+            margin-bottom:25px;
+            text-align:center;
+            letter-spacing:-0.025em;
+            .eyebrow {
+                display:inline-block;
+                padding:5px 11px;
+                border:1px solid $dwYellow;
+                color:$dwYellow;
+                font-size:12px;
+                line-height:1;
+                border-radius:12px;
+            }
+            .title {
+                margin-top:5px;
+                margin-bottom:0;
+                font-weight:400;
+                font-size:16px;
+            }
+        }
+
+        .footer {
+            margin-top:40px;
+            .btn-wrapper {
+                text-align:center;
+                font-size:0;
+
+                .btn {
+                    display:inline-block;
+                    width:40px;
+                    text-align:center;
+                    padding:0 10px;
+                    font-size:12px;
+                    font-weight:250;
+
+                    button {
+                        display:block;
+                        margin:0 auto 0.5em auto;
+                    }
+                }
+            }
+            
+        }
+
+        &.active {
+            display:block;
+        }
+    }
+}

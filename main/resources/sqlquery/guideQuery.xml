@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dwsws">
+	<!--스마트워크 룰에 해당하는 도구별 핵심 기능 -->
+	<select id="selectRule" resultType="resultRule" parameterType="int">
+		SELECT smart_work_rule.TITLE, smart_work_rule.COMMENTS, BKCOMMENTS, bmk_idx AS BIDX, bm_cnt.TITLE AS TOOL, bm_cnt.TIMEMOMENT, YOUTUBEURL
+		FROM smart_work_rule join rule join 
+			(SELECT bookmark.COMMENTS as BKCOMMENTS, contents.TITLE, bookmark.IDX as bmk_idx, YOUTUBEURL, bookmark.TIMEMOMENT
+			FROM bookmark join section join contents
+			WHERE bookmark.section = section.IDX and section.CONTENTS = contents.IDX) as bm_cnt
+		where smart_work_rule.RULE = rule.RULE and rule.BMK = bm_cnt.bmk_idx and smart_work_rule.RULE = #{num}
+        order by TOOL desc;
+	</select>
+
+	<!--스마트워크 룰 갯수 -->
+	<select id="selectRuleNum" resultType="int">
+		select count(*)
+		from smart_work_rule;
+	</select>
+
+	<!--스마트워크룰 FULL버전 URL -->
+	<select id="fullVersion" resultType="String">
+		select YOUTUBEURL
+		FROM contents
+		WHERE TITLE="스마트워크룰";
+	</select>
+	
+	<!--스마트워크룰 FULL버전 영상제목 -->
+	<select id="selectVideoTitle" resultType="String">
+	SELECT VIDEOTITLE
+	FROM contents
+	where title="스마트워크룰";
+	</select>
+	
+	<!--스마트워크룰 한줄설명  -->
+	<select id="oneDesc" resultType="String">
+	select onedesc
+	from contents
+	where title="스마트워크룰";
+	</select>
+
+	<!--스마트워크룰 상세 설명  -->
+	<select id="ruleDesc" resultType="String">
+	select comments
+	from contents
+	where title="스마트워크룰";
+	</select>
+	
+	<!--contents 툴 목록(for 모바일)  -->
+	<select id="contentsList" resultType="String" parameterType="String">
+	select title
+	from contents
+	where category=(select idx
+					from category
+					where comments=#{category})
+	group by title;
+	</select>
+	
+	<!--category list (for 모바일 select box)  -->
+	<select id="categoryList" resultType="String">
+	select comments
+	from category
+	order by case when comments in ('스마트워크룰') then 0 
+				  when comments in ('도구 가이드') then 1 
+                  when comments in ('보안') then 2
+                  when comments in ('디지털창') then 3 end, comments;
+	</select>
+	
+</mapper>

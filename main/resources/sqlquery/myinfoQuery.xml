@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dwsws">
+	<select id="getNumOfRankingData" resultType = "int">
+		select RANKING rowNum 
+		from user_ranking order by RANKING desc limit 1;
+	</select>
+	
+	<select id="getNumOfAllPeople" resultType = "int">
+		SELECT count(*) rowNum FROM user_info
+	</select>
+	
+	<select id="getRankingByUserindex" parameterType = "String" resultType = "int">
+		SELECT RANKING FROM user_ranking where USERINDEX = #{userindex}
+	</select>
+	
+	<select id="getRecentTrialNumByUserindexForToolname" parameterType = "map" resultType = "int">
+		select max(TRIALNUM) RECENTTRIALNUM
+			from ${toolname}_test_result ${toolname}
+		    where ${toolname}.USERINDEX = #{userindex}
+	</select>
+	
+	<select id="getRankingFromRecentResultByUserindex" parameterType = "map" resultType = "int">
+		select RANKING from
+			(select 
+				rank() over (order by TOTALSCORE desc) RANKING,
+			    USERINDEX from ${toolname}_recent_test_result ${toolname}) ranking_temp
+		where ranking_temp.USERINDEX = #{userindex}						
+	</select>
+	
+	<select id="getRecentTestResultByToolnameWithLimitnum" parameterType = "map" resultType = "recentDataInMyinfo">
+		select TRIALNUM, ENTRYDATE, TOTALSCORE, SKILL
+			from ${toolname}_test_result
+		    where USERINDEX = #{userindex}
+		    order by TRIALNUM desc
+		    LIMIT #{limitation}
+	</select>
+	
+	<select id="getSectionIndexByToolQuestionList" parameterType="map" resultType="sectionIdxByQuestion">
+		select ${toolname}_question.IDX IDX,
+			bookmark.SECTION BMKSECTION,
+	        if(${toolname}_question.UPDATEDATE > test_result.UPDATEDATE, 1, 0) RECENTFLAG
+			from bookmark,
+					${toolname}_question_list ${toolname}_question,
+					(select UPDATEDATE from ${toolname}_test_result where USERINDEX = #{userindex} order by TRIALNUM desc limit 1) test_result
+			where ${toolname}_question.BMKIDX = bookmark.IDX
+			order by ${toolname}_question.IDX
+	</select>
+	
+	<select id="getSectionCommentsByToolname" parameterType="String" resultType="String">
+		select section.COMMENTS from
+			section, bookmark, ${toolname}_question_list ${toolname}_question
+		    where ${toolname}_question.BMKIDX = bookmark.IDX
+					and bookmark.SECTION = section.IDX
+			group by section.COMMENTS
+			order by section.COMMENTS
+	</select>
+	
+	<select id="getUserindexFromTestresult" parameterType="String" resultType="String">
+		select USERINDEX from ${toolname}_test_result group by USERINDEX
+	</select>
+</mapper>

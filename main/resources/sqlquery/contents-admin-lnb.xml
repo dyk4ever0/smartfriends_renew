@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dwsws">
+<!--스마트워크룰 제외한 contents 목록 : 도구가이드, 보안 순서로 출력 , 스마트워크룰과 디지털창 제외   -->
+<select id="contentsList4admin" resultType="String">
+	select title
+	from contents join category
+    where contents.category = category.IDX and category.comments not in ('스마트워크룰') and category.comments not in ('디지털창')
+    group by title
+	order by case when category.comments in ('도구 가이드') then 1 
+                  when category.comments in ('보안') then 2
+                  when category.comments in ('디지털창') then 3 end;
+</select>
+</mapper>
